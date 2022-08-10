@@ -6,6 +6,13 @@
 import SwiftUI
 
 struct Home: View {
+    @FetchRequest(
+        entity: Habit.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \Habit.dateAdded, ascending: false)],
+        predicate: nil,
+        animation: .easeInOut
+    ) var habits: FetchedResults<Habit>
+    
     var body: some View {
         VStack(spacing: 0){
             Text("Habits")
@@ -20,7 +27,12 @@ struct Home: View {
                             .foregroundColor(.white)
                     }
                 }
-            ScrollView(.vertical, showsIndicators: false){
+            ScrollView(
+                habits.isEmpty
+                    ? .init()
+                    : .vertical
+                , showsIndicators: false
+            ){
                 VStack(spacing: 15){
                     // Add Habits Button
                     Button {
@@ -35,6 +47,11 @@ struct Home: View {
                         .foregroundColor(.white)
                     }
                     .padding(.top, 15)
+                    .frame(
+                        maxWidth: .infinity,
+                        maxHeight: .infinity,
+                        alignment: .center
+                    )
                 }
                 .padding(.vertical)
             }
