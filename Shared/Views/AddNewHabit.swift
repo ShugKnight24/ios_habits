@@ -10,7 +10,7 @@ struct AddNewHabit: View {
     var body: some View {
         NavigationView{
             VStack(spacing: 15){
-                TextField("Title", text: $habitModel.title)
+                TextField("Habit Name", text: $habitModel.title)
                     .padding(.horizontal)
                     .padding(.vertical, 15)
                     .background(Color("black").opacity(0.6),
