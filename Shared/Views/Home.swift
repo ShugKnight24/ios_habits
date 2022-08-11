@@ -13,6 +13,8 @@ struct Home: View {
         animation: .easeInOut
     ) var habits: FetchedResults<Habit>
     
+    @StateObject var habitModel: HabitViewModel = .init()
+    
     var body: some View {
         VStack(spacing: 0){
             Text("Habits")
@@ -20,7 +22,7 @@ struct Home: View {
                 .frame(maxWidth: .infinity)
                 .overlay(alignment: .trailing) {
                     Button {
-                        
+                        habitModel.addNewHabit.toggle()
                     } label: {
                         Image(systemName: "gearshape")
                             .font(.title2)
@@ -58,6 +60,11 @@ struct Home: View {
         }
         .frame(maxHeight: .infinity, alignment: .top)
         .padding()
+        .sheet(isPresented: $habitModel.addNewHabit){
+            
+        } content: {
+            
+        }
     }
 }
 
