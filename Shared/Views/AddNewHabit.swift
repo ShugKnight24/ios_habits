@@ -12,12 +12,30 @@ struct AddNewHabit: View {
             TextField("Title", text: $habitModel.title)
                 .padding(.horizontal)
                 .padding(.vertical, 15)
-                .background(Color("black"),
+                .background(Color("black").opacity(0.6),
                     in: RoundedRectangle(cornerRadius: 9, style: .continuous)
                 )
         }
-        .frame(maxHeight: .infinity)
+        .frame(maxHeight: .infinity, alignment: .top)
         .padding()
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Add New Habit")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading){
+                Button {
+                    
+                } label: {
+                    Image(systemName: "xmark.circle")
+                }
+                .tint(.white)
+            }
+            ToolbarItem(placement: .navigationBarTrailing){
+                Button("Done") {
+                    
+                }
+                .tint(.white)
+            }
+        }
     }
 }
 
