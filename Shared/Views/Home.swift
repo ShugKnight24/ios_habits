@@ -22,7 +22,7 @@ struct Home: View {
                 .frame(maxWidth: .infinity)
                 .overlay(alignment: .trailing) {
                     Button {
-                        habitModel.addNewHabit.toggle()
+
                     } label: {
                         Image(systemName: "gearshape")
                             .font(.title2)
@@ -38,7 +38,7 @@ struct Home: View {
                 VStack(spacing: 15){
                     // Add Habits Button
                     Button {
-                        
+                        habitModel.addNewHabit.toggle()
                     } label: {
                         Label {
                             Text("New Habit")
