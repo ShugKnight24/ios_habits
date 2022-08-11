@@ -14,5 +14,5 @@ class HabitViewModel: ObservableObject {
     @Published var weekDays: [String] = []
     @Published var reminderOn: Bool = false
     @Published var reminderText: String = ""
-    @Published var remindedDate: Date = Date()
+    @Published var reminderTime: Date = Date()
 }

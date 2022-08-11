@@ -77,7 +77,49 @@ struct AddNewHabit: View {
                     }
                     .padding(.top, 9)
                 }
+                
+                Divider()
+                    .padding(.vertical, 15)
+                
+                // Reminders
+                HStack {
+                    VStack(alignment: .leading, spacing: 9) {
+                        Text("Reminder")
+                            .fontWeight(.semibold)
+                        
+                        Text(habitModel.reminderOn ? "Notifications On" : "Notifications Off")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Toggle(isOn: $habitModel.reminderOn) {}
+                        .labelsHidden()
+                }
+                
+                HStack(spacing: 12) {
+                    Label {
+                        Text(habitModel.reminderTime.formatted(date: .omitted, time: .shortened))
+                    } icon: {
+                        Image(systemName: "clock")
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical, 15)
+                    .background(Color("black").opacity(0.6),
+                        in: RoundedRectangle(cornerRadius: 9, style: .continuous)
+                    )
+                    
+                    TextField("Reminder Text", text: $habitModel.reminderText)
+                        .padding(.horizontal)
+                        .padding(.vertical, 15)
+                        .background(Color("black").opacity(0.6),
+                            in: RoundedRectangle(cornerRadius: 9, style: .continuous)
+                        )
+                }
+                .frame(height: habitModel.reminderOn ? nil : 0)
+                .opacity(habitModel.reminderOn ? 1 : 0)
             }
+            .animation(.easeInOut, value: habitModel.reminderOn)
             .frame(maxHeight: .infinity, alignment: .top)
             .padding()
             .navigationBarTitleDisplayMode(.inline)
