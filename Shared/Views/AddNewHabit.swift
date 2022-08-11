@@ -108,6 +108,11 @@ struct AddNewHabit: View {
                     .background(Color("black").opacity(0.6),
                         in: RoundedRectangle(cornerRadius: 9, style: .continuous)
                     )
+                    .onTapGesture {
+                        withAnimation {
+                            habitModel.showTimePicker.toggle()
+                        }
+                    }
                     
                     TextField("Reminder Text", text: $habitModel.reminderText)
                         .padding(.horizontal)
@@ -138,6 +143,34 @@ struct AddNewHabit: View {
                         
                     }
                     .tint(.white)
+                }
+            }
+        }
+        .overlay {
+            if habitModel.showTimePicker {
+                ZStack {
+                    Rectangle()
+                        .fill(.ultraThinMaterial)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            withAnimation {
+                                habitModel.showTimePicker.toggle()
+                            }
+                        }
+                    
+                    DatePicker.init(
+                        "",
+                        selection: $habitModel.reminderTime,
+                        displayedComponents: [.hourAndMinute]
+                    )
+                    .datePickerStyle(.wheel)
+                    .labelsHidden()
+                    .padding()
+                    .background {
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color("black"))
+                    }
+                    .padding()
                 }
             }
         }
