@@ -15,6 +15,27 @@ struct AddNewHabit: View {
                 .background(Color("black").opacity(0.6),
                     in: RoundedRectangle(cornerRadius: 9, style: .continuous)
                 )
+            
+            HStack(spacing: 0){
+                ForEach(1...7, id: \.self){
+                    index in let color = "color-\(index)"
+                    Circle()
+                        .fill(Color(color))
+                        .frame(width: 30, height: 30)
+                        .overlay(content: {
+                            if color == habitModel.habitColor{
+                                Image(systemName: "checkmark")
+                                    .font(.caption.bold())
+                            }
+                        })
+                        .onTapGesture {
+                            withAnimation {
+                                habitModel.habitColor = color
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                }
+            }
         }
         .frame(maxHeight: .infinity, alignment: .top)
         .padding()
