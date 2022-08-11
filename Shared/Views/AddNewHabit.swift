@@ -17,6 +17,8 @@ struct AddNewHabit: View {
                         in: RoundedRectangle(cornerRadius: 9, style: .continuous)
                     )
                 
+                // Color Picker
+                // TODO: Fix horizontal scrolling
                 HStack(spacing: 0){
                     ForEach(1...7, id: \.self){
                         index in let color = "color-\(index)"
@@ -36,6 +38,44 @@ struct AddNewHabit: View {
                             }
                             .frame(maxWidth: .infinity)
                     }
+                }
+                .padding(.vertical)
+                
+                Divider()
+                
+                // Day Selection
+                VStack(alignment: .leading, spacing: 6){
+                    Text("Habit Schedule:")
+                        .font(.callout.bold())
+
+                    let weekDays = Calendar.current.weekdaySymbols
+                    HStack(spacing: 10){
+                        ForEach(weekDays, id: \.self){
+                            day in
+                            let isDaySelected = habitModel.weekDays.firstIndex {
+                                currentDay in return currentDay == day
+                            } ?? -1
+                            
+                            Text(day.prefix(3))
+                                .fontWeight(.semibold)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 15)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                        .fill(isDaySelected != -1 ? Color(habitModel.habitColor) : Color("black").opacity(0.9))
+                                }
+                                .onTapGesture {
+                                    withAnimation {
+                                        if isDaySelected != -1 {
+                                            habitModel.weekDays.remove(at: isDaySelected)
+                                        } else {
+                                            habitModel.weekDays.append(day)
+                                        }
+                                    }
+                                }
+                        }
+                    }
+                    .padding(.top, 9)
                 }
             }
             .frame(maxHeight: .infinity, alignment: .top)
