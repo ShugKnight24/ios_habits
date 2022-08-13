@@ -63,7 +63,8 @@ struct Home: View {
         .sheet(isPresented: $habitModel.addNewHabit){
             
         } content: {
-            
+            AddNewHabit()
+                .environmentObject(habitModel)
         }
     }
 }
