@@ -131,10 +131,11 @@ struct AddNewHabit: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle(habitModel.editHabit == nil ? "Add New Habit" : "Edit Habit")
             .toolbar {
-                // Add Habit
+                // Close out of Habit
                 ToolbarItem(placement: .navigationBarLeading){
                     Button {
                         env.dismiss()
+                        habitModel.resetData()
                     } label: {
                         Image(systemName: "xmark.circle")
                     }
@@ -144,8 +145,9 @@ struct AddNewHabit: View {
                 // Delete Habit
                 ToolbarItem(placement: .navigationBarLeading){
                     Button {
-                        if habitModel.deleteHaabit(context: env.managedObjectContext){
+                        if habitModel.deleteHabit(context: env.managedObjectContext){
                             env.dismiss()
+                            habitModel.resetData()
                         }
                     } label: {
                         Image(systemName: "trash")
@@ -160,6 +162,7 @@ struct AddNewHabit: View {
                         Task {
                             if await habitModel.addHabit(context: env.managedObjectContext){
                                 env.dismiss()
+                                habitModel.resetData()
                             }
                         }
                     }
