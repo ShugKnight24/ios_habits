@@ -29,6 +29,8 @@ struct Home: View {
                             .foregroundColor(.white)
                     }
                 }
+                .padding(.bottom, 12)
+            
             ScrollView(
                 habits.isEmpty
                     ? .init()
@@ -89,11 +91,72 @@ struct Home: View {
                 Spacer()
                 
                 let count = (habit.weekDays?.count ?? 0)
-                Text(count == 7 ? "Everyday" : "\(count) times a week")
+                Text(
+                    count == 7
+                        ? "Everyday"
+                        : count == 1
+                            ? "\(count) time a week"
+                            : "\(count) times a week"
+                )
                     .font(.caption)
                     .foregroundColor(.gray)
+                
+                let calendar = Calendar.current
+                let currentWeek = calendar.dateInterval(of: .weekOfMonth, for: Date())
+                let daySymbols = calendar.weekdaySymbols
+                let startDay = currentWeek?.start ?? Date()
+                let activeWeekDays = habit.weekDays ?? []
+                let activePlot = daySymbols.indices.compactMap {
+                    index -> (String, Date) in
+                    let currentDate = calendar.date(byAdding: .day, value: index, to: startDay)
+                    return (daySymbols[index], currentDate!)
+                }
+                
+                HStack(spacing: 15) {
+                    ForEach(activePlot.indices, id: \.self){
+                        index in
+                        let item = activePlot[index]
+                        
+                        VStack(spacing: 9) {
+                            Text(item.0.prefix(3))
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                            
+                            let status = activeWeekDays.contains {
+                                day in
+                                return day == item.0
+                            }
+                            
+                            Text(formatDate(date: item.1))
+                                .font(.system(size: 12))
+                                .fontWeight(.semibold)
+                                .padding(9)
+                                .background {
+                                    Circle()
+                                        .fill(Color(habit.color ?? "red"))
+                                        .opacity(status ? 1 : 0)
+                                    
+                                }
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+                }
+                .padding(.top, 12)
             }
         }
+        .padding(.vertical)
+        .padding(.horizontal, 12)
+        .background {
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .fill(Color("black").opacity(0.6))
+        }
+    }
+    
+    func formatDate(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd"
+        
+        return dateFormatter.string(from: date)
     }
 }
 
