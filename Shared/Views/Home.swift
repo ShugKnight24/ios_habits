@@ -67,7 +67,7 @@ struct Home: View {
         .frame(maxHeight: .infinity, alignment: .top)
         .padding()
         .sheet(isPresented: $habitModel.addNewHabit){
-            
+            habitModel.resetData()
         } content: {
             AddNewHabit()
                 .environmentObject(habitModel)
