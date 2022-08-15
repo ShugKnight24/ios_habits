@@ -47,11 +47,23 @@ class HabitViewModel: ObservableObject {
         return false
     }
     
+    // Delete Habit
+    func deleteHaabit(context: NSManagedObjectContext) -> Bool {
+        if let editHabit = editHabit {
+            context.delete(editHabit)
+            if let _ = try? context.save(){
+                return true
+            }
+        }
+        
+        return false
+    }
+    
     // Button Status
     func doneStatus() -> Bool {
         let reminderStatus = reminderOn ? reminderText == "" : false
         
-        if title == "" || weekDays.isEmpty || reminderStatus {
+        if (title == "" || weekDays.isEmpty || reminderStatus || editHabit != nil) {
             return false
         }
         return true

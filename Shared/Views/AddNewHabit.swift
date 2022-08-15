@@ -129,8 +129,9 @@ struct AddNewHabit: View {
             .frame(maxHeight: .infinity, alignment: .top)
             .padding()
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle("Add New Habit")
+            .navigationTitle(habitModel.editHabit == nil ? "Add New Habit" : "Edit Habit")
             .toolbar {
+                // Add Habit
                 ToolbarItem(placement: .navigationBarLeading){
                     Button {
                         env.dismiss()
@@ -139,6 +140,21 @@ struct AddNewHabit: View {
                     }
                     .tint(.white)
                 }
+                
+                // Delete Habit
+                ToolbarItem(placement: .navigationBarLeading){
+                    Button {
+                        if habitModel.deleteHaabit(context: env.managedObjectContext){
+                            env.dismiss()
+                        }
+                    } label: {
+                        Image(systemName: "trash")
+                    }
+                    .tint(.red)
+                    .opacity(habitModel.editHabit == nil ? 0 : 1 )
+                }
+                
+                // Add Habit
                 ToolbarItem(placement: .navigationBarTrailing){
                     Button("Done") {
                         Task {
