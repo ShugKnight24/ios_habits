@@ -149,6 +149,12 @@ struct Home: View {
             RoundedRectangle(cornerRadius: 12, style: .continuous)
                 .fill(Color("black").opacity(0.6))
         }
+        // Edit Habit
+        .onTapGesture {
+            habitModel.editHabit = habit
+            habitModel.populateHabitData()
+            habitModel.addNewHabit.toggle()
+        }
     }
     
     func formatDate(date: Date) -> String {
