@@ -18,6 +18,11 @@ class HabitViewModel: ObservableObject {
     @Published var reminderTime: Date = Date()
     @Published var showTimePicker: Bool = false
     @Published var editHabit: Habit?
+    @Published var notificationAccess: Bool = false
+    
+    init(){
+        requestNotificationAccess()
+    }
     
     // Add Habit
     func addHabit(context: NSManagedObjectContext) async -> Bool{
@@ -78,6 +83,16 @@ class HabitViewModel: ObservableObject {
             reminderOn = editHabit.reminderOn
             reminderText = editHabit.reminderText ?? ""
             reminderTime = editHabit.notificationTime ?? Date()
+        }
+    }
+    
+    // Notification Access
+    func requestNotificationAccess(){
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) {
+            status, _ in
+            DispatchQueue.main.async {
+                self.notificationAccess = status
+            }
         }
     }
         

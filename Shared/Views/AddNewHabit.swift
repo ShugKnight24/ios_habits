@@ -97,6 +97,7 @@ struct AddNewHabit: View {
                     Toggle(isOn: $habitModel.reminderOn) {}
                         .labelsHidden()
                 }
+                .opacity(habitModel.notificationAccess ? 1 : 0)
                 
                 HStack(spacing: 12) {
                     Label {
@@ -124,6 +125,7 @@ struct AddNewHabit: View {
                 }
                 .frame(height: habitModel.reminderOn ? nil : 0)
                 .opacity(habitModel.reminderOn ? 1 : 0)
+                .opacity(habitModel.notificationAccess ? 1 : 0)
             }
             .animation(.easeInOut, value: habitModel.reminderOn)
             .frame(maxHeight: .infinity, alignment: .top)
