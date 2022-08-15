@@ -37,7 +37,7 @@ struct Home: View {
                     : .vertical
                 , showsIndicators: false
             ){
-                VStack(spacing: 6){
+                VStack(spacing: 12){
                     ForEach(habits){
                         habit in HabitCardView(habit: habit)
                     }
@@ -76,7 +76,7 @@ struct Home: View {
     
     @ViewBuilder
     func HabitCardView(habit: Habit) -> some View {
-        VStack(spacing: 3){
+        VStack(spacing: 6){
             HStack{
                 Text(habit.title ?? "")
                     .font(.callout)
@@ -89,58 +89,60 @@ struct Home: View {
                     .scaleEffect(0.9)
                     .opacity(habit.reminderOn ? 1 : 0)
 
+                Spacer()
+
                 let count = (habit.weekDays?.count ?? 0)
                 Text(
                     count == 7
                         ? "Everyday"
                         : count == 1
-                            ? "\(count)x a week"
-                            : "\(count)x a week"
+                            ? "\(count) time a week"
+                            : "\(count) times a week"
                 )
                     .font(.caption)
                     .foregroundColor(.gray)
+            }
+            .padding(.horizontal, 12)
+            
+            let calendar = Calendar.current
+            let currentWeek = calendar.dateInterval(of: .weekOfMonth, for: Date())
+            let daySymbols = calendar.weekdaySymbols
+            let startDay = currentWeek?.start ?? Date()
+            let activeWeekDays = habit.weekDays ?? []
+            let activePlot = daySymbols.indices.compactMap {
+                index -> (String, Date) in
+                let currentDate = calendar.date(byAdding: .day, value: index, to: startDay)
+                return (daySymbols[index], currentDate!)
+            }
                 
-                let calendar = Calendar.current
-                let currentWeek = calendar.dateInterval(of: .weekOfMonth, for: Date())
-                let daySymbols = calendar.weekdaySymbols
-                let startDay = currentWeek?.start ?? Date()
-                let activeWeekDays = habit.weekDays ?? []
-                let activePlot = daySymbols.indices.compactMap {
-                    index -> (String, Date) in
-                    let currentDate = calendar.date(byAdding: .day, value: index, to: startDay)
-                    return (daySymbols[index], currentDate!)
-                }
-                
-                HStack(spacing: 3) {
-                    ForEach(activePlot.indices, id: \.self){
-                        index in
-                        let item = activePlot[index]
+            HStack(spacing: 3) {
+                ForEach(activePlot.indices, id: \.self){
+                    index in
+                    let item = activePlot[index]
+                    
+                    VStack(spacing: 6) {
+                        Text(item.0.prefix(3))
+                            .font(.caption)
+                            .foregroundColor(.gray)
                         
-                        VStack(spacing: 6) {
-                            Text(item.0.prefix(3))
-                                .font(.caption)
-                                .foregroundColor(.gray)
-                            
-                            let status = activeWeekDays.contains {
-                                day in
-                                return day == item.0
-                            }
-                            
-                            Text(formatDate(date: item.1))
-                                .font(.system(size: 9))
-                                .fontWeight(.semibold)
-                                .padding(3)
-                                .background {
-                                    Circle()
-                                        .fill(Color(habit.color ?? "red"))
-                                        .opacity(status ? 1 : 0)
-                                    
-                                }
+                        let status = activeWeekDays.contains {
+                            day in
+                            return day == item.0
                         }
-                        .frame(maxWidth: .infinity)
+                        
+                        Text(formatDate(date: item.1))
+                            .font(.system(size: 15))
+                            .fontWeight(.semibold)
+                            .padding(6)
+                            .background {
+                                Circle()
+                                    .fill(Color(habit.color ?? "red"))
+                                    .opacity(status ? 1 : 0)
+                            }
                     }
+                    .frame(maxWidth: .infinity)
                 }
-                .padding(.top, 9)
+                .padding(.top, 12)
             }
         }
         .padding(.vertical)
