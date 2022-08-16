@@ -22,6 +22,8 @@
 		4417F0D028A32085001D655A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4417F0A228A32085001D655A /* Assets.xcassets */; };
 		4417F0D128A32085001D655A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4417F0A228A32085001D655A /* Assets.xcassets */; };
 		4478A28C28A326730038F672 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4478A28B28A326730038F672 /* Home.swift */; };
+		4478A29028A334900038F672 /* HabitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4478A28F28A334900038F672 /* HabitViewModel.swift */; };
+		4478A29228A47ADB0038F672 /* AddNewHabit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4478A29128A47ADB0038F672 /* AddNewHabit.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 		4417F0C428A32085001D655A /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		4417F0C628A32085001D655A /* Tests_macOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOSLaunchTests.swift; sourceTree = "<group>"; };
 		4478A28B28A326730038F672 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		4478A28F28A334900038F672 /* HabitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitViewModel.swift; sourceTree = "<group>"; };
+		4478A29128A47ADB0038F672 /* AddNewHabit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewHabit.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				4478A28B28A326730038F672 /* Home.swift */,
+				4478A29128A47ADB0038F672 /* AddNewHabit.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -164,6 +169,7 @@
 		4478A28A28A326580038F672 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				4478A28F28A334900038F672 /* HabitViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -328,6 +334,8 @@
 			files = (
 				4417F0C828A32085001D655A /* habit_tracker.xcdatamodeld in Sources */,
 				4417F0CE28A32085001D655A /* Persistence.swift in Sources */,
+				4478A29028A334900038F672 /* HabitViewModel.swift in Sources */,
+				4478A29228A47ADB0038F672 /* AddNewHabit.swift in Sources */,
 				4478A28C28A326730038F672 /* Home.swift in Sources */,
 				4417F0CA28A32085001D655A /* habit_trackerApp.swift in Sources */,
 				4417F0CC28A32085001D655A /* ContentView.swift in Sources */,
